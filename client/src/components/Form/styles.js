@@ -21,10 +21,10 @@ export const styles = {
 
     fileInput: {
         width:  '97%',
-        margin: '10px 0',
+        margin: '10px 0 20px',
     },
 
     buttonSubmit: {
-        marginBottom: 10,
+        marginBottom: 2,
     }
 }
