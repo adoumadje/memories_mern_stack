@@ -1,12 +1,13 @@
 import { Button, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { useEffect } from 'react'
 import FileBase from 'react-file-base64'
-import { useDispatch } from 'react-redux'
-import { createPost } from '../../actions/posts'
+import { useDispatch, useSelector } from 'react-redux'
+import { createPost, updatePost } from '../../actions/posts'
 
 import { styles } from './styles'
 
-function Form() {
+function Form({currentId, setCurrentId}) {
   const [postData, setPostData] = useState({
     creator: '',
     title: '',
@@ -15,20 +16,37 @@ function Form() {
     selectedFile: '',
   })
   const dispatch = useDispatch()
+  const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null)
+
+  useEffect(() => {
+    if(post) setPostData(post)
+  }, [post])
 
   function handleSubmit(e) {
     e.preventDefault()
-    dispatch(createPost(postData))
+    if(currentId) {
+      dispatch(updatePost(currentId, postData))
+    } else {
+      dispatch(createPost(postData))
+    }
+    clear()
   }
 
   function clear() {
-
+    setCurrentId(null)
+    setPostData({
+      creator: '',
+      title: '',
+      message: '',
+      tags: '',
+      selectedFile: '',
+    })
   }
 
   return (
     <Paper sx={styles.paper}>
       <form autoComplete='off' noValidate style={{...styles.form}} onSubmit={handleSubmit}>
-        <Typography sx={{marginBottom: 2}} variant='h6'>Creating a Momory</Typography>
+        <Typography sx={{marginBottom: 2}} variant='h6'>{currentId ? 'Editing' : 'Creating'} a Memory</Typography>
         <TextField sx={{marginBottom: 2}} name='creator' variant='outlined' label='Creator' fullWidth value={postData.creator} 
           onChange={(e) => setPostData({ ...postData, creator: e.target.value })}
         />
@@ -48,7 +66,9 @@ function Form() {
             onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })}
           />
         </div>
-        <Button sx={styles.buttonSubmit} variant='contained' color='primary' size='large' type='submit' fullWidth>Submit</Button>
+        <Button sx={styles.buttonSubmit} variant='contained' color='primary' size='large' type='submit' fullWidth>
+          Submit
+        </Button>
         <Button variant='contained' color='secondary' size='small' onClick={clear} fullWidth>Clear</Button>
       </form>
     </Paper>
