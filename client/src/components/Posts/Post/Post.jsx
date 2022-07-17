@@ -4,10 +4,14 @@ import moment from 'moment'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { useDispatch } from 'react-redux'
 
 import { styles } from './styles'
+import { deletePost, likePost } from '../../../actions/posts'
 
-function Post({post, setCurrentId}) {
+function Post({post, setCurrentId, setRenderChanges}) {
+  const dispatch = useDispatch()
+
   return (
     <Card sx={styles.card}>
       <CardMedia sx={styles.media} image={post.selectedFile} title={post.title} />
@@ -25,14 +29,20 @@ function Post({post, setCurrentId}) {
       </div>
       <Typography sx={styles.title} variant='h5' gutterBottom>{post.title}</Typography>
       <CardContent>
-        <Typography variant='body1' gutterBottom>{post.message}</Typography>
+        <Typography variant='body2' color='textSecondary' component='p'>{post.message}</Typography>
       </CardContent>
       <CardActions sx={styles.cardActions}>
-        <Button>
+        <Button onClick={() => {
+            dispatch(likePost(post._id))
+            setRenderChanges(Math.random())
+        }}>
           <ThumbUpIcon sx={{marginRight: 1}} fontSize='small' />
           {post.likeCount} Like
         </Button>
-        <Button>
+        <Button onClick={() => {
+            dispatch(deletePost(post._id))
+            setRenderChanges(Math.random())
+        }}>
           <DeleteIcon fontSize='small' />
           Delete
         </Button>

@@ -11,11 +11,12 @@ import { styles } from './styles'
 
 function App() {
   const [currentId, setCurrentId] = useState(null)
+  const [renderChanges, setRenderChanges] = useState()
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getPosts())
-  }, [currentId, dispatch])
+  }, [currentId, renderChanges, dispatch])
 
 
   return (
@@ -28,7 +29,7 @@ function App() {
         <Container>
           <Grid container justify='space-between' alignItems='stretch' spacing={3}>
             <Grid item xs={12} sm={7}>
-              <Posts setCurrentId={setCurrentId} />
+              <Posts setRenderChanges={setRenderChanges} setCurrentId={setCurrentId} />
             </Grid>
             <Grid item xs={12} sm={4}>
               <Form currentId={currentId} setCurrentId={setCurrentId} />
