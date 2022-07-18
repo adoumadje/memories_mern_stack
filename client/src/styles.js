@@ -1,3 +1,8 @@
+import { createTheme } from "@mui/system"
+
+
+const theme = createTheme()
+
 export const styles = {
     appBar: {
         borderRadius: 15,
@@ -14,5 +19,11 @@ export const styles = {
 
     image: {
         marginLeft: '15px',
-    }
+    },
+
+    mainContainer: {
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column-reverse',
+        },
+    },
 }

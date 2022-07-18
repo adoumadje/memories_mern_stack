@@ -57,7 +57,7 @@ function Form({currentId, setCurrentId}) {
           onChange={(e) => setPostData({ ...postData, message: e.target.value })}
         />
         <TextField sx={{marginBottom: 1}} name='tags' variant='outlined' label='Tags' fullWidth value={postData.tags} 
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })}
         />
         <div style={styles.fileInput}>
           <FileBase

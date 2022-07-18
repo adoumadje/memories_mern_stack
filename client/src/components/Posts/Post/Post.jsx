@@ -37,7 +37,8 @@ function Post({post, setCurrentId, setRenderChanges}) {
             setRenderChanges(Math.random())
         }}>
           <ThumbUpIcon sx={{marginRight: 1}} fontSize='small' />
-          {post.likeCount} Like
+          {post.likeCount}&nbsp;
+          Like
         </Button>
         <Button onClick={() => {
             dispatch(deletePost(post._id))
