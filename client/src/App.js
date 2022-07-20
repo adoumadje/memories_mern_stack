@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Container, AppBar, Typography, Grow, Grid } from '@mui/material'
+import { Container, Grow, Grid } from '@mui/material'
 import { useDispatch } from 'react-redux'
 
 import { getPosts } from './actions/posts'
-import memories from './components/images/memories.png'
 import Posts from './components/Posts/Posts'
 import Form from './components/Form/Form'
+import Navbar from './components/Navbar/Navbar'
 
 import { styles } from './styles'
 
@@ -21,10 +21,7 @@ function App() {
 
   return (
     <Container maxWidth='lg'>
-      <AppBar sx={styles.appBar} position='static' color='inherit'>
-        <Typography sx={styles.heading} variant='h2' align='center'>Memories</Typography>
-        <img sx={styles.image} src={memories} alt='memories' height='60' />
-      </AppBar>
+      <Navbar />
       <Grow in>
         <Container>
           <Grid container sx={styles.mainContainer} justify='space-between' alignItems='stretch' spacing={3}>
